@@ -1,5 +1,5 @@
 
-[![Build status](https://ci.appveyor.com/api/projects/status/k3h1hypknt4vnyy0/branch/master?svg=true)](https://ci.appveyor.com/project/PowerShell/PackageManagementProviderResource/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/cbn2ugntt02msbrk/branch/master?svg=true)](https://ci.appveyor.com/project/SpotLabsNET/cpackagemanagement/branch/master)
 
 
 ### PackageManagementProviderResource
