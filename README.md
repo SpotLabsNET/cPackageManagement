@@ -1,15 +1,12 @@
 
-[![Build status](https://ci.appveyor.com/api/projects/status/cbn2ugntt02msbrk/branch/master?svg=true&passingText=master%20-%20passing&failingText=master%20-%failing)](https://ci.appveyor.com/project/SpotLabsNET/cpackagemanagement/branch/master)[![Build status](https://ci.appveyor.com/api/projects/status/cbn2ugntt02msbrk/branch/develop?svg=true)](https://ci.appveyor.com/project/SpotLabsNET/cpackagemanagement/branch/develop)
+[![Build status](https://ci.appveyor.com/api/projects/status/cbn2ugntt02msbrk/branch/master?svg=true&passingText=master%20-%20passing&failingText=master%20-%20failing&pendingText=building)](https://ci.appveyor.com/project/SpotLabsNET/cpackagemanagement/branch/master) [![Build status](https://ci.appveyor.com/api/projects/status/cbn2ugntt02msbrk/branch/develop?svg=true&passingText=develop%20-%20passing&failingText=develop%20-%20failing&pendingText=building)](https://ci.appveyor.com/project/SpotLabsNET/cpackagemanagement/branch/develop)
 
 
 # cPackageManagement
 
-The cPackageManagement module contains DSC resources configuration of the system package manager. Currently it contains resources to manage the NuGet, PowerShellGet and Chocolatey PackageProviders and PackageSources. 
+The cPackageManagement module contains resources that target the configuration of the system package manager. The modules provides resources that target the configuration of PackageProviders, PackageSources and Packages. This module is restricted to NuGet, PowerShellGet and Chocolatey to ensure a robust set of use cases. 
 
-## Contributing
-Please check out common DSC Resources [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
-
-#### Resources
+## Resources
 
 * **cPackageProvider** – The cPackageProvider resource assist in the bootstraping of package providers to the underlying system. This includes NuGet, PowerShellGet and Chocolatey. For unknown reasons the PackageManagement libraries do not expose a method to remove a PackageProvider, only 'Install' and 'Import'. 
 
@@ -17,6 +14,9 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 * **cPackage** - The cPackage resource is used to install, uninstall, publish and save packages supplied by a PackageSource using the semantics of a NuGet, PowerShellGet or Chocolatey providers.
 
+
+## Contributing
+Please check out common DSC Resources [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
 
 **NugetPackage** DSC resource has the following properties:
 <table>
