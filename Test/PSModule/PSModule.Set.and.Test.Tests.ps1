@@ -23,7 +23,7 @@ $CurrentDirectory = Split-Path -Parent $MyInvocation.MyCommand.Path
 SetupPSModuleTest
 
 # We will be focusing on the tests around installation policy, versions, and multiple repositories, as we have covered basics in the get tests already.
-Describe -Name "PSModule Set, Test-TargetResource Basic Test" -Tags "BVT"{
+Describe -Name 'PSModule Set, Test-TargetResource Basic Test' -Tags 'BVT'{
 
     BeforeEach {
 
@@ -36,60 +36,60 @@ Describe -Name "PSModule Set, Test-TargetResource Basic Test" -Tags "BVT"{
 
     }
       
-    Context "PSModule Set, Test-TargetResource Basic Test" {       
+    Context 'PSModule Set, Test-TargetResource Basic Test' {       
  
-        It "Set, Test-TargetResource with Trusted Source, No Versions Specified: Check Installed" {
+        It 'Set, Test-TargetResource with Trusted Source, No Versions Specified: Check Installed' {
            
             #Register a local module repository to make the test run faster
-            RegisterRepository -Name "LocalRepository" -InstallationPolicy Trusted -Ensure Present
+            RegisterRepository -Name 'LocalRepository' -InstallationPolicy Trusted -Ensure Present
 
             # 'BeforeEach' removes all specific modules under the $module path, so it is expected Set-Target* should success in the installation
-            MSFT_PSModule\Set-TargetResource -name "MyTestModule" -Repository $LocalRepository  -Ensure Present -Verbose
+            MSFT_PSModule\Set-TargetResource -name 'MyTestModule' -Repository $LocalRepository  -Ensure Present -Verbose
 
             # Validate the module is installed
-            $result = MSFT_PSModule\Test-TargetResource -name "MyTestModule" -Repository $LocalRepository  -Ensure Present
+            $result = MSFT_PSModule\Test-TargetResource -name 'MyTestModule' -Repository $LocalRepository  -Ensure Present
 
             $result| should be $true
 
             # Uninstalling the module
-            MSFT_PSModule\Set-TargetResource -name "MyTestModule" -Repository $LocalRepository  -Ensure Absent -Verbose
+            MSFT_PSModule\Set-TargetResource -name 'MyTestModule' -Repository $LocalRepository  -Ensure Absent -Verbose
 
             # Validate the module is uninstalled
-            $result = MSFT_PSModule\Test-TargetResource -name "MyTestModule" -Repository $LocalRepository  -Ensure Absent
+            $result = MSFT_PSModule\Test-TargetResource -name 'MyTestModule' -Repository $LocalRepository  -Ensure Absent
 
             $result| should be $true
         }
 
-        It "Set, Test-TargetResource with Trusted Source, No respository Specified: Check Installed" {
+        It 'Set, Test-TargetResource with Trusted Source, No respository Specified: Check Installed' {
            
             #Register a local module repository to make the test run faster
-            RegisterRepository -Name "LocalRepository" -InstallationPolicy Trusted -Ensure Present
+            RegisterRepository -Name 'LocalRepository' -InstallationPolicy Trusted -Ensure Present
 
             # 'BeforeEach' removes all specific modules under the $module path, so it is expected Set-Target* should success in the installation
-            MSFT_PSModule\Set-TargetResource -name "MyTestModule" -Ensure Present -Verbose
+            MSFT_PSModule\Set-TargetResource -name 'MyTestModule' -Ensure Present -Verbose
 
             # Validate the module is installed
-            $result = MSFT_PSModule\Test-TargetResource -name "MyTestModule" -Ensure Present
+            $result = MSFT_PSModule\Test-TargetResource -name 'MyTestModule' -Ensure Present
 
             $result| should be $true
 
             # Uninstalling the module
-            MSFT_PSModule\Set-TargetResource -name "MyTestModule" -Ensure Absent -Verbose
+            MSFT_PSModule\Set-TargetResource -name 'MyTestModule' -Ensure Absent -Verbose
 
             # Validate the module is uninstalled
-            $result = MSFT_PSModule\Test-TargetResource -name "MyTestModule" -Ensure Absent
+            $result = MSFT_PSModule\Test-TargetResource -name 'MyTestModule' -Ensure Absent
 
             $result| should be $true
         }
 
-        It "Set, Test-TargetResource with untrusted source and trusted user policy: Check Warning" {
+        It 'Set, Test-TargetResource with untrusted source and trusted user policy: Check Warning' {
            
             # Registering repository with untrusted installation policy
-            RegisterRepository -Name "LocalRepository" -InstallationPolicy Untrusted -Ensure Present
+            RegisterRepository -Name 'LocalRepository' -InstallationPolicy Untrusted -Ensure Present
 
 
             # User's installation policy is trusted
-            $result = MSFT_PSModule\Set-TargetResource  -Name "MyTestModule" `
+            $result = MSFT_PSModule\Set-TargetResource  -Name 'MyTestModule' `
                                                             -Repository $LocalRepository `
                                                             -InstallationPolicy Trusted `
                                                             -WarningVariable wv
@@ -97,21 +97,21 @@ Describe -Name "PSModule Set, Test-TargetResource Basic Test" -Tags "BVT"{
             if ($wv)
             {
                 # Check the warning message
-                $wv -imatch "untrusted repository"
+                $wv -imatch 'untrusted repository'
                                
                 # The module should be installed
-                $result = MSFT_PSModule\Test-TargetResource -name "MyTestModule" -Repository $LocalRepository  -Ensure "Present"
+                $result = MSFT_PSModule\Test-TargetResource -name 'MyTestModule' -Repository $LocalRepository  -Ensure 'Present'
                 
                 $result| should be $true
 
                 return
             }
            
-            Throw "Expecting InstallationPolicyWarning but not happen"    
+            Throw 'Expecting InstallationPolicyWarning but not happen'    
         }
 
                
-        It "Set, Test-TargetResource with multiple sources and versions of a modules: Check Installed" {
+        It 'Set, Test-TargetResource with multiple sources and versions of a modules: Check Installed' {
            
             # Registering multiple source
 
@@ -121,17 +121,17 @@ Describe -Name "PSModule Set, Test-TargetResource Basic Test" -Tags "BVT"{
             {
                 $returnVal = CleanupRepository
                 
-                RegisterRepository -Name "LocalRepository1" -InstallationPolicy Untrusted -Ensure Present -SourceLocation $LocalRepositoryPath1 -PublishLocation $LocalRepositoryPath1
+                RegisterRepository -Name 'LocalRepository1' -InstallationPolicy Untrusted -Ensure Present -SourceLocation $LocalRepositoryPath1 -PublishLocation $LocalRepositoryPath1
 
-                RegisterRepository -Name "LocalRepository2" -InstallationPolicy Trusted -Ensure Present -SourceLocation $LocalRepositoryPath2 -PublishLocation $LocalRepositoryPath2
+                RegisterRepository -Name 'LocalRepository2' -InstallationPolicy Trusted -Ensure Present -SourceLocation $LocalRepositoryPath2 -PublishLocation $LocalRepositoryPath2
 
-                RegisterRepository -Name "LocalRepository3" -InstallationPolicy Untrusted -Ensure Present -SourceLocation $LocalRepositoryPath3 -PublishLocation $LocalRepositoryPath3
+                RegisterRepository -Name 'LocalRepository3' -InstallationPolicy Untrusted -Ensure Present -SourceLocation $LocalRepositoryPath3 -PublishLocation $LocalRepositoryPath3
                 
                 # User's installation policy is untrusted
-                MSFT_PSModule\Set-TargetResource -name "MyTestModule" -Ensure "Present" -Verbose -Repository "LocalRepository2"
+                MSFT_PSModule\Set-TargetResource -name 'MyTestModule' -Ensure 'Present' -Verbose -Repository 'LocalRepository2'
 
                 # The module from the trusted source should be installed
-                $result = MSFT_PSModule\Test-TargetResource -name "MyTestModule" -Repository "LocalRepository2"  -Ensure "Present"
+                $result = MSFT_PSModule\Test-TargetResource -name 'MyTestModule' -Repository 'LocalRepository2'  -Ensure 'Present'
                 
                 $result| should be $true
             }
@@ -140,33 +140,33 @@ Describe -Name "PSModule Set, Test-TargetResource Basic Test" -Tags "BVT"{
                 RestoreRepository -RepositoryInfo $returnVal
                 # Unregistering the repository sources
             
-                RegisterRepository -Name "LocalRepository1" -Ensure Absent -SourceLocation $LocalRepositoryPath1 -PublishLocation $LocalRepositoryPath1
+                RegisterRepository -Name 'LocalRepository1' -Ensure Absent -SourceLocation $LocalRepositoryPath1 -PublishLocation $LocalRepositoryPath1
 
-                RegisterRepository -Name "LocalRepository2" -Ensure Absent -SourceLocation $LocalRepositoryPath2 -PublishLocation $LocalRepositoryPath2
+                RegisterRepository -Name 'LocalRepository2' -Ensure Absent -SourceLocation $LocalRepositoryPath2 -PublishLocation $LocalRepositoryPath2
 
-                RegisterRepository -Name "LocalRepository3" -Ensure Absent -SourceLocation $LocalRepositoryPath3 -PublishLocation $LocalRepositoryPath3
+                RegisterRepository -Name 'LocalRepository3' -Ensure Absent -SourceLocation $LocalRepositoryPath3 -PublishLocation $LocalRepositoryPath3
             }
         }  
         
             
     }#context
 
-    Context "PSModule Set-TargetResource Error Cases" {
+    Context 'PSModule Set-TargetResource Error Cases' {
 
         #Register a local module repository to make the test run faster
-        RegisterRepository -Name "LocalRepository" -InstallationPolicy Trusted -Ensure Present
+        RegisterRepository -Name 'LocalRepository' -InstallationPolicy Trusted -Ensure Present
 
-        It "Set-TargetResource with module not found for the install: Check Error" {
+        It 'Set-TargetResource with module not found for the install: Check Error' {
 
             try
             {
                 # The module does not exist
-                MSFT_PSModule\Set-TargetResource -name "NonExistModule" -Ensure Present -ErrorAction SilentlyContinue 2>&1
+                MSFT_PSModule\Set-TargetResource -name 'NonExistModule' -Ensure Present -ErrorAction SilentlyContinue 2>&1
             }
             catch
             {
                 #Expect fail to install.
-                $_.FullyQualifiedErrorId | should be "ModuleNotFoundInRepository"
+                $_.FullyQualifiedErrorId | should be 'ModuleNotFoundInRepository'
                 return
             }
    
@@ -174,17 +174,17 @@ Describe -Name "PSModule Set, Test-TargetResource Basic Test" -Tags "BVT"{
         }
 
         # In the reality the following case won't happen because LCM always call Test-TargetResource first before calling Set
-        It "Set-TargetResource with module not found for the uninstall: Check Error" {
+        It 'Set-TargetResource with module not found for the uninstall: Check Error' {
            
             try
             {
                 # The module does not exist
-                $result = MSFT_PSModule\Set-TargetResource -Name "NonExistModule" -Ensure Absent -Verbose -ErrorAction SilentlyContinue
+                $result = MSFT_PSModule\Set-TargetResource -Name 'NonExistModule' -Ensure Absent -Verbose -ErrorAction SilentlyContinue
             }
             Catch
             {
                 #Expect an expection
-                $_.FullyQualifiedErrorId | should be "ModuleWithRightPropertyNotFound"
+                $_.FullyQualifiedErrorId | should be 'ModuleWithRightPropertyNotFound'
                 return
             } 
             
@@ -192,16 +192,16 @@ Describe -Name "PSModule Set, Test-TargetResource Basic Test" -Tags "BVT"{
         }
 
 
-        It "Set , Test-TargetResource: Check Absent and False" {
+        It 'Set , Test-TargetResource: Check Absent and False' {
 
             # Calling Set-TargetResource to uninstall the MyTestModule module
             try
             {
-                Set-TargetResource -name "MyTestModule" -Repository $LocalRepository -RequiredVersion "1.1.2" -Ensure "Absent" -Verbose
+                Set-TargetResource -name 'MyTestModule' -Repository $LocalRepository -RequiredVersion '1.1.2' -Ensure 'Absent' -Verbose
             }
             catch
             {
-                if ($_.FullyQualifiedErrorId -ieq "ModuleWithRightPropertyNotFound")
+                if ($_.FullyQualifiedErrorId -ieq 'ModuleWithRightPropertyNotFound')
                 {
                     #The module is not installed. Ignore the error
                 }
@@ -212,7 +212,7 @@ Describe -Name "PSModule Set, Test-TargetResource Basic Test" -Tags "BVT"{
             }
 
             # Calling Get-TargetResource in the PSModule resource 
-            $result = MSFT_PSModule\Test-TargetResource -Name "MyTestModule" -Repository $LocalRepository -RequiredVersion "1.1.2"
+            $result = MSFT_PSModule\Test-TargetResource -Name 'MyTestModule' -Repository $LocalRepository -RequiredVersion '1.1.2'
 
             # Validate the result
             $result | should be $false
@@ -220,27 +220,27 @@ Describe -Name "PSModule Set, Test-TargetResource Basic Test" -Tags "BVT"{
         }
 
         # Both the user's and repository installation policies are untrusted, expect an error         
-        It "Set-TargetResource with Untrusted User InstallationPolicy and Source: Check Error" {
+        It 'Set-TargetResource with Untrusted User InstallationPolicy and Source: Check Error' {
             
             # Register a repository with the untrusted policy
 
-            RegisterRepository -Name "LocalRepository1" -InstallationPolicy Untrusted -Ensure Present -SourceLocation $LocalRepositoryPath1 -PublishLocation $LocalRepositoryPath1
+            RegisterRepository -Name 'LocalRepository1' -InstallationPolicy Untrusted -Ensure Present -SourceLocation $LocalRepositoryPath1 -PublishLocation $LocalRepositoryPath1
 
 
             Try
             {
                 # User's installation policy is untrusted.
-                $result = MSFT_PSModule\Set-TargetResource -Name "MyTestModule" -Repository "LocalRepository1" -InstallationPolicy Untrusted
+                $result = MSFT_PSModule\Set-TargetResource -Name 'MyTestModule' -Repository 'LocalRepository1' -InstallationPolicy Untrusted
             }
             Catch
             {
                 #Expect fail to install.
-                $_.FullyQualifiedErrorId | should be "InstallationPolicyFailed"
+                $_.FullyQualifiedErrorId | should be 'InstallationPolicyFailed'
                 return
             }
             finally
             {
-                  RegisterRepository -Name "LocalRepository1" -Ensure Absent -SourceLocation $LocalRepositoryPath1 -PublishLocation $LocalRepositoryPath1
+                  RegisterRepository -Name 'LocalRepository1' -Ensure Absent -SourceLocation $LocalRepositoryPath1 -PublishLocation $LocalRepositoryPath1
             }
 
             Throw "Expected 'InstallationPolicyFailed' exception did not happen"           

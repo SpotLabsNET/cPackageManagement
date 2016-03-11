@@ -70,7 +70,7 @@ VariablesToExport = @()
 AliasesToExport = @()
 
 # DSC resources to export from this module
-DscResourcesToExport = 'cPackageProvider', 'cPackageSource'
+DscResourcesToExport = 'cPackageSource'
 
 # List of all modules packaged with this module
 # ModuleList = @()

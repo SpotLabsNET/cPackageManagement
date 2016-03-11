@@ -13,27 +13,27 @@
 <# Run Test cases Pre-Requisite: 
   1. After download the OngetGet DSC resources modules, it is expected the following are available under your current directory. For example,
 
-    C:\Program Files\WindowsPowerShell\Modules\PackageManagementProviderResource\
+    C:\Program Files\WindowsPowerShell\Modules\cPackageManagement\
         
         DSCResources
         Examples
         Test
-        PackageManagementProviderResource.psd1
+        cPackageManagement.psd1
 #>
 
 #Define the variables
 
 $CurrentDirectory            = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
+$ModuleDirectory             = Split-Path -Path $CurrentDirectory -Parent
 
-$script:LocalRepositoryPath  = "$CurrentDirectory\LocalRepository"
-$script:LocalRepositoryPath1 = "$CurrentDirectory\LocalRepository1"
-$script:LocalRepositoryPath2 = "$CurrentDirectory\LocalRepository2"
-$script:LocalRepositoryPath3 = "$CurrentDirectory\LocalRepository3"
-$script:LocalRepository      = "LocalRepository"
+$script:LocalRepositoryPath  = "$CurrentDirectory\.tmp\LocalRepository"
+$script:LocalRepositoryPath1 = "$CurrentDirectory\.tmp\LocalRepository1"
+$script:LocalRepositoryPath2 = "$CurrentDirectory\.tmp\LocalRepository2"
+$script:LocalRepositoryPath3 = "$CurrentDirectory\.tmp\LocalRepository3"
+$script:LocalRepository      = 'LocalRepository'
 $script:InstallationFolder   = $null
 $script:DestinationPath      = $null
 $script:Module               = $null
-
 
 
 #A DSC configuration for installing Pester
@@ -56,30 +56,30 @@ configuration Sample_InstallPester
         [string]$DestinationPath       
     )
 
-    Import-DscResource -Module PackageManagementProviderResource
+    Import-DscResource -Module cPackageManagement
 
-    Node "localhost"
+    Node 'localhost'
     {
         
         #register package source       
-        PackageManagementSource SourceRepository
+        cPackageSource SourceRepository
         {
 
-            Ensure      = "Present"
-            Name        = "Mynuget"
-            ProviderName= "Nuget" 
-            SourceUri   = "http://nuget.org/api/v2/"    
+            Ensure      = 'Present'
+            Name        = 'Mynuget'
+            ProviderName= 'Nuget' 
+            SourceUri   = 'http://nuget.org/api/v2/'    
             InstallationPolicy ="Trusted"
         }   
         
         #Install a package from Nuget repository
         NugetPackage Nuget
         {
-            Ensure          = "Present"
-            Name            = "Pester"
+            Ensure          = 'Present'
+            Name            = 'Pester'
             DestinationPath = $DestinationPath
-            DependsOn       = "[PackageManagementSource]SourceRepository"
-            InstallationPolicy="Trusted"
+            DependsOn       = '[cPackageSource]SourceRepository'
+            InstallationPolicy='Trusted'
         }                              
     } 
 }
@@ -96,7 +96,7 @@ Function InstallPester
     Write-Verbose -Message ("Calling function '$($MyInvocation.mycommand)'")
 
     # Check if the Pester have installed already under Program Files\WindowsPowerShell\Modules\Pester
-    $pester = Get-Module -Name "Pester" -ListAvailable
+    $pester = Get-Module -Name 'Pester' -ListAvailable
 
     if ($pester.count -ge 1)
     {
@@ -107,7 +107,7 @@ Function InstallPester
     else
     {
         # Get the module path where to be installed
-        $module = Get-Module -Name "PackageManagementProviderResource" -ListAvailable
+        $module = Get-Module -Name 'cPackageManagement' -ListAvailable
 
         # Compile it
         Sample_InstallPester -DestinationPath "$($module.ModuleBase)\test"
@@ -161,16 +161,16 @@ Function SetupLocalRepository
     if ($PSModule)
     {
         # Set up for PSModule testing
-        CreateTestModuleInLocalRepository -ModuleName "MyTestModule"  -ModuleVersion "1.1"    -LocalRepository $script:LocalRepository
-        CreateTestModuleInLocalRepository -ModuleName "MyTestModule"  -ModuleVersion "1.1.2"  -LocalRepository $script:LocalRepository
-        CreateTestModuleInLocalRepository -ModuleName "MyTestModule"  -ModuleVersion "3.2.1"  -LocalRepository $script:LocalRepository
+        CreateTestModuleInLocalRepository -ModuleName 'MyTestModule'  -ModuleVersion '1.1'    -LocalRepository $script:LocalRepository
+        CreateTestModuleInLocalRepository -ModuleName 'MyTestModule'  -ModuleVersion '1.1.2'  -LocalRepository $script:LocalRepository
+        CreateTestModuleInLocalRepository -ModuleName 'MyTestModule'  -ModuleVersion '3.2.1'  -LocalRepository $script:LocalRepository
     }
     else
     {
         #Setup for nuget and others testing
-        CreateTestModuleInLocalRepository -ModuleName "MyTestPackage" -ModuleVersion "12.0.1"   -LocalRepository $script:LocalRepository
-        CreateTestModuleInLocalRepository -ModuleName "MyTestPackage" -ModuleVersion "12.0.1.1" -LocalRepository $script:LocalRepository
-        CreateTestModuleInLocalRepository -ModuleName "MyTestPackage" -ModuleVersion "15.2.1"   -LocalRepository $script:LocalRepository
+        CreateTestModuleInLocalRepository -ModuleName 'MyTestPackage' -ModuleVersion '12.0.1'   -LocalRepository $script:LocalRepository
+        CreateTestModuleInLocalRepository -ModuleName 'MyTestPackage' -ModuleVersion '12.0.1.1' -LocalRepository $script:LocalRepository
+        CreateTestModuleInLocalRepository -ModuleName 'MyTestPackage' -ModuleVersion '15.2.1'   -LocalRepository $script:LocalRepository
     }
 
     # Replica the repository    
@@ -191,7 +191,7 @@ Function SetupPSModuleTest
     Write-Verbose -Message ("Calling function '$($MyInvocation.mycommand)'")
 
     #Need to import resource MSFT_PSModule.psm1
-    Import-ModulesToSetupTest -ModuleChildPath  "MSFT_PSModule\MSFT_PSModule.psm1"  
+    Import-ModulesToSetupTest -ModuleChildPath  'MSFT_PSModule\MSFT_PSModule.psm1'  
 
     SetupLocalRepository -PSModule 
 
@@ -210,7 +210,7 @@ Function SetupNugetTest
     Write-Verbose -Message ("Calling function '$($MyInvocation.mycommand)'")
 
     #Import MSFT_NugetPackage.psm1 module
-    Import-ModulesToSetupTest -ModuleChildPath  "MSFT_NugetPackage\MSFT_NugetPackage.psm1"
+    Import-ModulesToSetupTest -ModuleChildPath  'MSFT_NugetPackage\MSFT_NugetPackage.psm1'
     
     $script:DestinationPath = "$CurrentDirectory\TestResult\NugetTest" 
 
@@ -230,7 +230,7 @@ Function SetupOneGetSourceTest
     #>
     Write-Verbose -Message ("Calling function '$($MyInvocation.mycommand)'")
 
-    Import-ModulesToSetupTest -ModuleChildPath  "MSFT_PackageManagementSource\MSFT_PackageManagementSource.psm1"
+    Import-ModulesToSetupTest -ModuleChildPath  'SPOT_PackageSource\SPOT_PackageSource.psm1'
 
     SetupLocalRepository
 
@@ -261,7 +261,7 @@ Function Import-ModulesToSetupTest
 
     $moduleChildPath="DSCResources\$($ModuleChildPath)"
 
-    $script:Module = Get-Module -Name "PackageManagementProviderResource" -ListAvailable
+    $script:Module = Get-Module -Name 'cPackageManagement' -ListAvailable
 
     $modulePath = Microsoft.PowerShell.Management\Join-Path -Path $script:Module.ModuleBase -ChildPath $moduleChildPath
 
@@ -306,16 +306,16 @@ function RegisterRepository
            [System.String]
         $PublishLocation=$script:LocalRepositoryPath,
 
-        [ValidateSet("Trusted","Untrusted")]
+        [ValidateSet('Trusted','Untrusted')]
         [System.String]
-        $InstallationPolicy="Trusted",
+        $InstallationPolicy='Trusted',
 
-        [ValidateSet("Present","Absent")]
+        [ValidateSet('Present','Absent')]
         [System.String]
-        $Ensure="Present"
+        $Ensure='Present'
     )
 
-    Write-Verbose -Message "RegisterRepository called" 
+    Write-Verbose -Message 'RegisterRepository called' 
 
     # Calling the following to trigger Bootstrap provider for the first time use PackageManagement
     Get-PackageSource -ProviderName Nuget -ForceBootstrap -WarningAction Ignore 
@@ -337,7 +337,7 @@ function RegisterRepository
         }
     }
 
-    if($Ensure -ieq "Present")
+    if($Ensure -ieq 'Present')
     {       
         # If the repository has already been registered, unregister it.
         if ($isRegistered -and ($null -ne $registeredRepository))
@@ -377,7 +377,7 @@ function RestoreRepository
         $RepositoryInfo
     )
 
-    Write-Verbose -Message "RestoreRepository called"  
+    Write-Verbose -Message 'RestoreRepository called'  
        
     foreach ($repository in $RepositoryInfo.Keys)
     {
@@ -392,7 +392,7 @@ function RestoreRepository
         #Ignore if the repository already registered
         catch
         {
-            if ($_.FullyQualifiedErrorId -ine "PackageSourceExists")
+            if ($_.FullyQualifiedErrorId -ine 'PackageSourceExists')
             {
                 throw
             }
@@ -410,7 +410,7 @@ function CleanupRepository
 
     #>
 
-    Write-Verbose -Message "CleanupRepository called" 
+    Write-Verbose -Message 'CleanupRepository called' 
 
     $returnVal = @{}
     $psrepositories = PowerShellGet\get-PSRepository
@@ -418,10 +418,10 @@ function CleanupRepository
     foreach ($repository in $psrepositories)
     {
         #Save the info for later restore process
-        $repositoryInfo = @{"Name"=$repository.Name; `
-                            "SourceLocation"=$repository.SourceLocation; `
-                            "PublishLocation"=$repository.PublishLocation;`
-                            "InstallationPolicy"=$repository.InstallationPolicy}
+        $repositoryInfo = @{'Name'=$repository.Name; `
+                            'SourceLocation'=$repository.SourceLocation; `
+                            'PublishLocation'=$repository.PublishLocation;`
+                            'InstallationPolicy'=$repository.InstallationPolicy}
 
         $returnVal.Add($repository.Name, $repositoryInfo);
 
@@ -431,7 +431,7 @@ function CleanupRepository
         }
         catch
         {
-            if ($_.FullyQualifiedErrorId -ine "RepositoryCannotBeUnregistered")
+            if ($_.FullyQualifiedErrorId -ine 'RepositoryCannotBeUnregistered')
             {
                 throw
             }
@@ -484,28 +484,28 @@ function RegisterPackageSource
         $Credential,
     
         [System.String]
-        [ValidateSet("Trusted","Untrusted")]
-        $InstallationPolicy ="Untrusted",
+        [ValidateSet('Trusted','Untrusted')]
+        $InstallationPolicy ='Untrusted',
 
         [System.String]
-        $ProviderName="Nuget",
+        $ProviderName='Nuget',
 
-        [ValidateSet("Present","Absent")]
+        [ValidateSet('Present','Absent')]
         [System.String]
-        $Ensure="Present"
+        $Ensure='Present'
     )
 
-    Write-Verbose -Message "Calling RegisterPackageSource"
+    Write-Verbose -Message 'Calling RegisterPackageSource'
 
     #import the OngetSource module
-    Import-ModulesToSetupTest -ModuleChildPath  "MSFT_PackageManagementSource\MSFT_PackageManagementSource.psm1"
+    Import-ModulesToSetupTest -ModuleChildPath  'SPOT_PackageSource\SPOT_PackageSource.psm1'
     
-    if($Ensure -ieq "Present")
+    if($Ensure -ieq 'Present')
     {       
         # If the repository has already been registered, unregister it.
         UnRegisterSource -Name $Name -ProviderName $ProviderName -SourceUri $SourceUri       
 
-        MSFT_PackageManagementSource\Set-TargetResource -Name $name `
+        SPOT_PackageSource\Set-TargetResource -Name $name `
                                              -providerName $ProviderName `
                                              -SourceUri $SourceUri `
                                              -SourceCredential $Credential `
@@ -520,7 +520,7 @@ function RegisterPackageSource
     } 
     
     # remove the OngetSource module, after we complete the register/unregister task
-    Remove-Module -Name  "MSFT_PackageManagementSource"  -Force -ErrorAction SilentlyContinue         
+    Remove-Module -Name  'SPOT_PackageSource'  -Force -ErrorAction SilentlyContinue         
 }
 
 Function UnRegisterSource
@@ -550,17 +550,17 @@ Function UnRegisterSource
         $SourceUri,
 
         [System.String]
-        $ProviderName="Nuget"
+        $ProviderName='Nuget'
     )
 
     Write-Verbose -Message ("Calling function '$($MyInvocation.mycommand)'")
 
-    $getResult = MSFT_PackageManagementSource\Get-TargetResource -Name $name -providerName $ProviderName -SourceUri $SourceUri -Verbose
+    $getResult = SPOT_PackageSource\Get-TargetResource -Name $name -providerName $ProviderName -SourceUri $SourceUri -Verbose
 
-    if ($getResult.Ensure -ieq "Present")
+    if ($getResult.Ensure -ieq 'Present')
     {
         #Unregister it
-        MSFT_PackageManagementSource\Set-TargetResource -Name $name -providerName $ProviderName -SourceUri $SourceUri -Verbose -Ensure Absent               
+        SPOT_PackageSource\Set-TargetResource -Name $name -providerName $ProviderName -SourceUri $SourceUri -Verbose -Ensure Absent               
     }
 }
 
@@ -586,7 +586,7 @@ Function UnRegisterAllSource
         }
         catch
         {
-            if ($_.FullyQualifiedErrorId -ine "RepositoryCannotBeUnregistered")
+            if ($_.FullyQualifiedErrorId -ine 'RepositoryCannotBeUnregistered')
             {
                 throw
             }
@@ -656,7 +656,7 @@ function CreateTestModuleInLocalRepository
         return
     }
 
-    # Get the parent 'PackageManagementProviderResource' module path
+    # Get the parent 'cPackageManagement' module path
     $parentModulePath = Microsoft.PowerShell.Management\Split-Path -Path $script:Module.ModuleBase -Parent
 
     $modulePath = Microsoft.PowerShell.Management\Join-Path -Path $parentModulePath -ChildPath "$ModuleName"
@@ -671,12 +671,12 @@ function CreateTestModuleInLocalRepository
     try
     {
         # Publish the module to your local repository
-        PowerShellGet\Publish-Module -Path $modulePath -NuGetApiKey "Local-Repository-NuGet-ApiKey" -Repository $LocalRepository -Verbose -ErrorAction SilentlyContinue         
+        PowerShellGet\Publish-Module -Path $modulePath -NuGetApiKey 'Local-Repository-NuGet-ApiKey' -Repository $LocalRepository -Verbose -ErrorAction SilentlyContinue         
     }
     catch
     { 
         # Ignore the particular error
-        if ($_.FullyQualifiedErrorId -ine "ModuleVersionShouldBeGreaterThanGalleryVersion,Publish-Module")
+        if ($_.FullyQualifiedErrorId -ine 'ModuleVersionShouldBeGreaterThanGalleryVersion,Publish-Module')
         {
             throw
         }               

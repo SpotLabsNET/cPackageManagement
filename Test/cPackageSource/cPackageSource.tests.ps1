@@ -16,80 +16,80 @@ $CurrentDirectory = Split-Path -Parent $MyInvocation.MyCommand.Path
 #Calling the setup function 
 SetupOneGetSourceTest
 
-Describe -Name  "PackageManagementSource Get.Set.Test-TargetResource Basic Test" -Tags "BVT" {
+Describe -Name  'cPackageSource Get.Set.Test-TargetResource Basic Test' -Tags 'BVT' {
 
     BeforeEach {
 
         #Unregister the source if already registered 
-        UnRegisterSource -Name "MyNuget" -providerName "Nuget" -SourceUri $LocalRepositoryPath
+        UnRegisterSource -Name 'MyNuget' -providerName 'Nuget' -SourceUri $LocalRepositoryPath
     }
 
     AfterEach {
     }     
     
-    Context "PackageManagementSource Get.Set.Test-TargetResource Basic Test" {
+    Context 'cPackageSource Get.Set.Test-TargetResource Basic Test' {
 
-        It "Get.Set.Test-TargetResource: Check Present" {
+        It 'Get.Set.Test-TargetResource: Check Present' {
             
             #Register the package source
-            MSFT_PackageManagementSource\Set-TargetResource -name "MyNuget" -providerName "Nuget" -SourceUri $LocalRepositoryPath -Ensure Present -Verbose
+            SPOT_PackageSource\Set-TargetResource -name 'MyNuget' -providerName 'Nuget' -SourceUri $LocalRepositoryPath -Ensure Present -Verbose
 
             #Test it to make sure Set-TargetResource is successfully register the source
-            $testResult = MSFT_PackageManagementSource\Test-TargetResource -Name "MyNuget" -providerName "Nuget" -SourceUri $LocalRepositoryPath -Verbose
+            $testResult = SPOT_PackageSource\Test-TargetResource -Name 'MyNuget' -providerName 'Nuget' -SourceUri $LocalRepositoryPath -Verbose
 
             $testResult | should be $true
 
             #Validate the returned Get results
-            $getResult = MSFT_PackageManagementSource\Get-TargetResource -Name "MyNuget" -providerName "Nuget" -SourceUri $LocalRepositoryPath -Verbose
+            $getResult = SPOT_PackageSource\Get-TargetResource -Name 'MyNuget' -providerName 'Nuget' -SourceUri $LocalRepositoryPath -Verbose
 
-            $getResult.Ensure | should be "Present"
-            $getResult.Name | should be "MyNuget"
+            $getResult.Ensure | should be 'Present'
+            $getResult.Name | should be 'MyNuget'
             $getResult.SourceUri | should be $LocalRepositoryPath
-            $getResult.InstallationPolicy | should be "Untrusted"  #default is untrusted
-            $getResult.Providername | should be "Nuget"  
+            $getResult.InstallationPolicy | should be 'Untrusted'  #default is untrusted
+            $getResult.Providername | should be 'Nuget'  
         }
 
         
-        It "Get.Set.Test-TargetResource: Check Absent" {
+        It 'Get.Set.Test-TargetResource: Check Absent' {
             
  
             #Test it to make sure the source is unregistered
-            $testResult = MSFT_PackageManagementSource\Test-TargetResource -Name "MyNuget" -providerName "Nuget" -SourceUri $LocalRepositoryPath -Verbose
+            $testResult = SPOT_PackageSource\Test-TargetResource -Name 'MyNuget' -providerName 'Nuget' -SourceUri $LocalRepositoryPath -Verbose
 
             $testResult | should be $false
 
             #Validate the returned Get results
-            $getResult = MSFT_PackageManagementSource\Get-TargetResource -Name "MyNuget" -providerName "Nuget" -SourceUri $LocalRepositoryPath -Verbose
+            $getResult = SPOT_PackageSource\Get-TargetResource -Name 'MyNuget' -providerName 'Nuget' -SourceUri $LocalRepositoryPath -Verbose
 
-            $getResult.Ensure | should be "Absent"
-            $getResult.Name | should be "MyNuget"
-            $getResult.Providername | should be "Nuget" 
+            $getResult.Ensure | should be 'Absent'
+            $getResult.Name | should be 'MyNuget'
+            $getResult.Providername | should be 'Nuget' 
             $getResult.SourceUri | should BeNullOrEmpty
             $getResult.InstallationPolicy | should BeNullOrEmpty 
         }
 
      
-        It "Get.Set.Test-TargetResource with the multiple Sources" {
+        It 'Get.Set.Test-TargetResource with the multiple Sources' {
 
             #Unregister the source if already registered 
-            UnRegisterSource -Name "MyNuget1" -providerName "Nuget" -SourceUri $LocalRepositoryPath1
-            UnRegisterSource -Name "MyNuget2" -providerName "Nuget" -SourceUri $LocalRepositoryPath2
+            UnRegisterSource -Name 'MyNuget1' -providerName 'Nuget' -SourceUri $LocalRepositoryPath1
+            UnRegisterSource -Name 'MyNuget2' -providerName 'Nuget' -SourceUri $LocalRepositoryPath2
 
             Try
             {
                 #Register the package source
-                MSFT_PackageManagementSource\Set-TargetResource -name "MyNuget" -providerName "Nuget" -SourceUri $LocalRepositoryPath -Ensure Present -Verbose
-                MSFT_PackageManagementSource\Set-TargetResource -name "MyNuget1" -providerName "Nuget" -SourceUri $LocalRepositoryPath1 -Ensure Present -Verbose
-                MSFT_PackageManagementSource\Set-TargetResource -name "MyNuget2" `
-                                                     -providerName "Nuget" `
+                SPOT_PackageSource\Set-TargetResource -name 'MyNuget' -providerName 'Nuget' -SourceUri $LocalRepositoryPath -Ensure Present -Verbose
+                SPOT_PackageSource\Set-TargetResource -name 'MyNuget1' -providerName 'Nuget' -SourceUri $LocalRepositoryPath1 -Ensure Present -Verbose
+                SPOT_PackageSource\Set-TargetResource -name 'MyNuget2' `
+                                                     -providerName 'Nuget' `
                                                      -SourceUri $LocalRepositoryPath2 `
                                                      -Ensure Present `
                                                      -InstallationPolicy Trusted `
                                                      -Verbose                                                 
 
             
-                $testResult = MSFT_PackageManagementSource\Test-TargetResource -Name "MyNuget" `
-                                                     -providerName "Nuget"`
+                $testResult = SPOT_PackageSource\Test-TargetResource -Name 'MyNuget' `
+                                                     -providerName 'Nuget'`
                                                      -SourceUri $LocalRepositoryPath `
                                                      -InstallationPolicy Trusted `
                                                      -Verbose
@@ -97,8 +97,8 @@ Describe -Name  "PackageManagementSource Get.Set.Test-TargetResource Basic Test"
                 #We registered a source with untrusted installation policy but test-targetresource uses trusted, so it's a false
                 $testResult | should be $false
 
-                $testResult = MSFT_PackageManagementSource\Test-TargetResource -Name "MyNuget" `
-                                                     -providerName "Nuget"`
+                $testResult = SPOT_PackageSource\Test-TargetResource -Name 'MyNuget' `
+                                                     -providerName 'Nuget'`
                                                      -SourceUri $LocalRepositoryPath1 `
                                                      -InstallationPolicy Untrusted `
                                                      -Verbose
@@ -106,8 +106,8 @@ Describe -Name  "PackageManagementSource Get.Set.Test-TargetResource Basic Test"
                 #We registered a source with $LocalRepositoryPath but test-targetresource uses $LocalRepositoryPath1 , so it's a false
                 $testResult | should be $false
 
-                $testResult = MSFT_PackageManagementSource\Test-TargetResource -Name "MyNuget2" `
-                                                     -providerName "Nuget"`
+                $testResult = SPOT_PackageSource\Test-TargetResource -Name 'MyNuget2' `
+                                                     -providerName 'Nuget'`
                                                      -SourceUri $LocalRepositoryPath2 `
                                                      -InstallationPolicy Trusted `
                                                      -Verbose
@@ -118,19 +118,19 @@ Describe -Name  "PackageManagementSource Get.Set.Test-TargetResource Basic Test"
             finally
             {
                 #Unregister the source if already registered 
-                UnRegisterSource -Name "MyNuget" -providerName "Nuget" -SourceUri $LocalRepositoryPath
-                UnRegisterSource -Name "MyNuget1" -providerName "Nuget" -SourceUri $LocalRepositoryPath1
-                UnRegisterSource -Name "MyNuget2" -providerName "Nuget" -SourceUri $LocalRepositoryPath2
+                UnRegisterSource -Name 'MyNuget'  -providerName 'Nuget' -SourceUri $LocalRepositoryPath
+                UnRegisterSource -Name 'MyNuget1' -providerName 'Nuget' -SourceUri $LocalRepositoryPath1
+                UnRegisterSource -Name 'MyNuget2' -providerName 'Nuget' -SourceUri $LocalRepositoryPath2
             }
         }
        
                
-        It "Get.Set.Test-TargetResource with SourceCredential: Check Registered" {
+        It 'Get.Set.Test-TargetResource with SourceCredential: Check Registered' {
            
-            $credential = (CreateCredObject -Name ".\Administrator" -PSCode "MassRules!")
+            $credential = (CreateCredObject -Name '.\Administrator' -PSCode 'MassRules!')
 
-            MSFT_PackageManagementSource\Set-TargetResource -name "MyNuget" `
-                                                     -providerName "Nuget" `
+            SPOT_PackageSource\Set-TargetResource -name 'MyNuget' `
+                                                     -providerName 'Nuget' `
                                                      -SourceUri $LocalRepositoryPath `
                                                      -Ensure Present `
                                                      -InstallationPolicy Trusted `
@@ -139,8 +139,8 @@ Describe -Name  "PackageManagementSource Get.Set.Test-TargetResource Basic Test"
 
 
             # Validate the package is installed
-            $testResult = MSFT_PackageManagementSource\Test-TargetResource -Name "MyNuget" `
-                                                     -providerName "Nuget" `
+            $testResult = SPOT_PackageSource\Test-TargetResource -Name 'MyNuget' `
+                                                     -providerName 'Nuget' `
                                                      -SourceUri $LocalRepositoryPath `
                                                      -Ensure Present `
                                                      -InstallationPolicy Trusted `
@@ -152,21 +152,21 @@ Describe -Name  "PackageManagementSource Get.Set.Test-TargetResource Basic Test"
 
         }
 
-        It "Set-TargetResource to change installationpolicy from untrusted to trusted: Check Installed" {
+        It 'Set-TargetResource to change installationpolicy from untrusted to trusted: Check Installed' {
             
             #Register the package source
-            MSFT_PackageManagementSource\Set-TargetResource -name "MyNuget" -providerName "Nuget" -SourceUri $LocalRepositoryPath -Ensure Present -InstallationPolicy Untrusted -Verbose 
+            SPOT_PackageSource\Set-TargetResource -name 'MyNuget' -providerName 'Nuget' -SourceUri $LocalRepositoryPath -Ensure Present -InstallationPolicy Untrusted -Verbose 
 
             #Test it to make sure Set-TargetResource is successfully unregister the source
-            $testResult = MSFT_PackageManagementSource\Test-TargetResource -Name "MyNuget" -providerName "Nuget" -SourceUri $LocalRepositoryPath
+            $testResult = SPOT_PackageSource\Test-TargetResource -Name 'MyNuget' -providerName 'Nuget' -SourceUri $LocalRepositoryPath
 
             $testResult | should be $true
                     
             
             #register it with the same name but different source uri
-            MSFT_PackageManagementSource\Set-TargetResource -name "MyNuget" -providerName "Nuget" -SourceUri $LocalRepositoryPath -Ensure Present -InstallationPolicy Trusted -Verbose 
+            SPOT_PackageSource\Set-TargetResource -name 'MyNuget' -providerName 'Nuget' -SourceUri $LocalRepositoryPath -Ensure Present -InstallationPolicy Trusted -Verbose 
             
-            $testResult = MSFT_PackageManagementSource\Test-TargetResource -Name "MyNuget" -providerName "Nuget" -SourceUri $LocalRepositoryPath -InstallationPolicy Trusted
+            $testResult = SPOT_PackageSource\Test-TargetResource -Name 'MyNuget' -providerName 'Nuget' -SourceUri $LocalRepositoryPath -InstallationPolicy Trusted
 
             $testResult | should be $true
                           
@@ -174,17 +174,17 @@ Describe -Name  "PackageManagementSource Get.Set.Test-TargetResource Basic Test"
         
     }#context
    
-    Context "PackageManagementSource Get.Set.Test-TargetResource Error Case" {  
+    Context 'cPackageSource Get.Set.Test-TargetResource Error Case' {  
 
-        It "Get-TargetResource to unregistered a source that does not exist: Check Error" {
+        It 'Get-TargetResource to unregistered a source that does not exist: Check Error' {
 
             try
             {
-                MSFT_PackageManagementSource\Set-TargetResource -name "MyNuget" -providerName "Nuget" -SourceUri $LocalRepositoryPath -Ensure Absent -Verbose 2>&1
+                SPOT_PackageSource\Set-TargetResource -name 'MyNuget' -providerName 'Nuget' -SourceUri $LocalRepositoryPath -Ensure Absent -Verbose 2>&1
             }
             catch
             {
-                $_.FullyQualifiedErrorId -ieq "UnRegisterFailed" | should be $true
+                $_.FullyQualifiedErrorId -ieq 'UnRegisterFailed' | should be $true
                 return
             }
             
@@ -194,6 +194,3 @@ Describe -Name  "PackageManagementSource Get.Set.Test-TargetResource Basic Test"
      } #context
 
 }#Describe
-
-
-
