@@ -1,21 +1,22 @@
 
-[![Build status](https://ci.appveyor.com/api/projects/status/cbn2ugntt02msbrk/branch/master?svg=true)](https://ci.appveyor.com/project/SpotLabsNET/cpackagemanagement/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/cbn2ugntt02msbrk/branch/master?svg=true&passingText=master%20-%20passing&failingText=master%20-%20failing&pendingText=building)](https://ci.appveyor.com/project/SpotLabsNET/cpackagemanagement/branch/master) [![Build status](https://ci.appveyor.com/api/projects/status/cbn2ugntt02msbrk/branch/develop?svg=true&passingText=develop%20-%20passing&failingText=develop%20-%20failing&pendingText=building)](https://ci.appveyor.com/project/SpotLabsNET/cpackagemanagement/branch/develop)
 
 
-### PackageManagementProviderResource
+# cPackageManagement
 
-The PackageManagementProviderResource is the DSC resources for PackageManagement (aka OneGet) providers. Currently it contains the Nuget and PowerShellGet provider DSC resources to allow you to manage packages and Windows PowerShell modules.
+The cPackageManagement module contains resources that target the configuration of the system package manager. The modules provides resources that target the configuration of PackageProviders, PackageSources and Packages. This module is restricted to NuGet, PowerShellGet and Chocolatey to ensure a robust set of use cases. 
 
-#### Contributing
+## Resources
+
+* **cPackageProvider** – The cPackageProvider resource assist in the bootstraping of package providers to the underlying system. This includes NuGet, PowerShellGet and Chocolatey. For unknown reasons the PackageManagement libraries do not expose a method to remove a PackageProvider, only 'Install' and 'Import'. 
+
+* **cPackageSource** – The cPackageSource resource assists with registering and unregistering package repositories on the underlying system. There is full support for NuGet, PowerShellGet and Chocolatey provider sematics to interop with the source repository. 
+
+* **cPackage** - The cPackage resource is used to install, uninstall, publish and save packages supplied by a PackageSource using the semantics of a NuGet, PowerShellGet or Chocolatey providers.
+
+
+## Contributing
 Please check out common DSC Resources [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
-
-#### Resources
-
-* **NugetPackage** – lets you download packages from the NuGet source location (e.g., http://nuget.org/api/v2/), and install or uninstall the package.
-
-* **PSModule** – lets you download Windows PowerShell modules from the PowerShell Gallery, "PSGallery" (e.g., https://www.powershellgallery.com/api/v2/ ), and install them on your computer.
-
-* **PackageManagementSource** – lets you register or unregister a package source on your computer
 
 **NugetPackage** DSC resource has the following properties:
 <table>
@@ -134,7 +135,7 @@ Before you install this package, you must be running  [Windows Management Framew
 <br/>
 ####**Installation**####
 
-To use the **PackageManagementProviderResource** module,
+To use the **cPackageManagement** module,
 * Copy the content of the download to the $env:ProgramFiles\WindowsPowerShell\Modules folder.
 
 To confirm installation,
@@ -149,7 +150,7 @@ The code is a Windows PowerShell script and interpreted by the Windows PowerShel
 ####**Running Test**####
 
 To test the modules, run the following commands. The NuGetPackage resource is used here as an example.
-* cd $env:ProgramFiles\WindowsPowerShell\Modules\PackageManagementProviderResource\Test
+* cd $env:ProgramFiles\WindowsPowerShell\Modules\cPackageManagement\Test
 * .\NugetPackage\NugetPackage.Get.Tests.ps1
 * .\NugetPackage\NugetPackage.Set.Tests.ps1
 * .\NugetPackage\NugetPackage.Test.Tests.ps1
@@ -161,7 +162,7 @@ You can repeat these commands similarly for testing PSModule and OneGetSource DS
 
 You are welcome to contribute to this project. There are many ways to contribute:
 
-1.	Submit a bug report via [Issues]( https://github.com/PowerShell/PackageManagementProviderResource/issues). For a guide to submitting good bug reports, please read [Painless Bug Tracking](http://www.joelonsoftware.com/articles/fog0000000029.html).
+1.	Submit a bug report via [Issues]( https://github.com/PowerShell/cPackageManagement/issues). For a guide to submitting good bug reports, please read [Painless Bug Tracking](http://www.joelonsoftware.com/articles/fog0000000029.html).
 
 2.	Verify fixes for bugs.
 
