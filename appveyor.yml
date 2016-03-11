@@ -21,9 +21,9 @@ install:
 
 build_script:
 
-- ps: New-Item -Path "$Env:ProgramFiles\WindowsPowerShell\Modules\PackageManagementProviderResource" -ItemType Directory -Force  
+- ps: New-Item -Path "$Env:ProgramFiles\WindowsPowerShell\Modules\cPackageManagement" -ItemType Directory -Force  
 
-- ps: Copy-Item -Recurse "$env:APPVEYOR_BUILD_FOLDER\*" "$Env:ProgramFiles\WindowsPowerShell\Modules\PackageManagementProviderResource" -Force -Verbose
+- ps: Copy-Item -Recurse "$env:APPVEYOR_BUILD_FOLDER\*" "$Env:ProgramFiles\WindowsPowerShell\Modules\cPackageManagement" -Force -Verbose
 
 
 #---------------------------------#
@@ -49,7 +49,7 @@ deploy_script:
   - ps: |
       # Creating project artifact
       $stagingDirectory = (Resolve-Path ..).Path
-      $manifest = Join-Path $pwd "PackageManagementProviderResource.psd1"
+      $manifest = Join-Path $pwd "cPackageManagement.psd1"
       (Get-Content $manifest -Raw).Replace("1.8.0.0", $env:APPVEYOR_BUILD_VERSION) | Out-File $manifest
       $zipFilePath = Join-Path $stagingDirectory "$(Split-Path $pwd -Leaf).zip"
       Add-Type -assemblyname System.IO.Compression.FileSystem
