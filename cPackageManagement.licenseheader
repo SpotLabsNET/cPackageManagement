@@ -1,15 +1,19 @@
 ﻿extensions: designer.cs generated.cs
 extensions: .cs .cpp .h
-// Copyright (c) 2011 rubicon IT GmbH
+// Copyright (c) 2012-2016 SpotLabs, LLC
+//       All Rights Reserved
 extensions: .aspx .ascx
 <%-- 
-Copyright (c) 2011 rubicon IT GmbH
+Copyright (c) 2012-2016 SpotLabs, LLC
+       All Rights Reserved
 --%>
 extensions: .vb
-'Sample license text.
+'' Copyright (c) 2012-2016 SpotLabs, LLC
+''       All Rights Reserved
 extensions:  .xml .config .xsd
 <!--
-Sample license text.
+Copyright (c) 2012-2016 SpotLabs, LLC
+       All Rights Reserved
 -->
 extensions: .ps1 .psd1 .psm1 .mof
 <#
