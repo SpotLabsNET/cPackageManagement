@@ -1,5 +1,4 @@
-
-[![Build status](https://ci.appveyor.com/api/projects/status/cbn2ugntt02msbrk/branch/master?svg=true&passingText=master%20-%20passing&failingText=master%20-%20failing&pendingText=building)](https://ci.appveyor.com/project/SpotLabsNET/cpackagemanagement/branch/master) [![Build status](https://ci.appveyor.com/api/projects/status/cbn2ugntt02msbrk/branch/develop?svg=true&passingText=develop%20-%20passing&failingText=develop%20-%20failing&pendingText=building)](https://ci.appveyor.com/project/SpotLabsNET/cpackagemanagement/branch/develop)
+﻿[![Build status](https://ci.appveyor.com/api/projects/status/cbn2ugntt02msbrk/branch/master?svg=true&passingText=master%20-%20passing&failingText=master%20-%20failing&pendingText=building)](https://ci.appveyor.com/project/SpotLabsNET/cpackagemanagement/branch/master) [![Build status](https://ci.appveyor.com/api/projects/status/cbn2ugntt02msbrk/branch/develop?svg=true&passingText=develop%20-%20passing&failingText=develop%20-%20failing&pendingText=building)](https://ci.appveyor.com/project/SpotLabsNET/cpackagemanagement/branch/develop)
 
 
 #cPackageManagement
@@ -21,3 +20,4 @@ This module has dependecies on the PackageManagement framework:
 * [PowerShell 5.0](https://www.microsoft.com/en-us/download/details.aspx?id=50395)
 * [PowerShell 4.0](https://www.microsoft.com/en-us/download/details.aspx?id=51451)
 * [PowerShell 3.0](https://www.microsoft.com/en-us/download/details.aspx?id=51451)
+
