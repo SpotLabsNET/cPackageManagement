@@ -38,7 +38,6 @@
     <Folder Include="Tests\Unit\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="appveyor.yml" />
     <Compile Include="cPackageManagement.psd1" />
     <Compile Include="DSCResources\SPOT_Helper.psm1" />
     <Compile Include="DSCResources\SPOT_Helper.strings.psd1" />
@@ -52,6 +51,7 @@
     <Compile Include="DSCResources\SPOT_Package\SPOT_Package.strings.psd1" />
     <Compile Include="LICENSE" />
     <Compile Include="README.md" />
+    <Compile Include="appveyor.yml" />
     <Compile Include="Tests\cPackageSource\cPackageSource.tests.ps1" />
     <Compile Include="Tests\cPackage\NugetPackage.Get.Tests.ps1" />
     <Compile Include="Tests\cPackage\NugetPackage.IntegrationTest.Tests.ps1" />
