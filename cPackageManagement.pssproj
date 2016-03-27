@@ -69,6 +69,9 @@
     <Compile Include="DSCResources.Docs\README.md" />
     <Compile Include="appveyor.yml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="cPackageManagement.licenseheader" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />
 </Project>
