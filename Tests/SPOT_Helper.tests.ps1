@@ -69,11 +69,11 @@ configuration Sample_InstallPester
             Name        = 'Mynuget'
             ProviderName= 'Nuget' 
             SourceUri   = 'http://nuget.org/api/v2/'    
-            InstallationPolicy ="Trusted"
+            InstallationPolicy ='Trusted'
         }   
         
         #Install a package from Nuget repository
-        NugetPackage Nuget
+        cPackage PesterPackage
         {
             Ensure          = 'Present'
             Name            = 'Pester'
@@ -209,8 +209,8 @@ Function SetupNugetTest
     #>
     Write-Verbose -Message ("Calling function '$($MyInvocation.mycommand)'")
 
-    #Import MSFT_NugetPackage.psm1 module
-    Import-ModulesToSetupTest -ModuleChildPath  'MSFT_NugetPackage\MSFT_NugetPackage.psm1'
+    #Import SPOT_Package.psm1 module
+    Import-ModulesToSetupTest -ModuleChildPath  'SPOT_Package\SPOT_Package.psm1'
     
     $script:DestinationPath = "$CurrentDirectory\TestResult\NugetTest" 
 

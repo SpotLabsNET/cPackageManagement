@@ -12,7 +12,7 @@
 #Helper functions for PackageManagement DSC Resouces
 
 
-Import-LocalizedData -BindingVariable LocalizedData -filename OneGetHelper.strings.psd1
+Import-LocalizedData -BindingVariable LocalizedData -filename SPOT_Helper.strings.psd1
 
 
  Function ExtractArguments

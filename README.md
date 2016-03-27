@@ -12,7 +12,7 @@ The cPackageManagement module contains resources that target the configuration o
 
 * **cPackageSource** – The cPackageSource resource assists with registering and unregistering package repositories on the underlying system. There is full support for NuGet, PowerShellGet and Chocolatey provider sematics to interact with the source repository. 
 
-* [TODO] **cPackage** - The cPackage resource is used to install, uninstall, publish and save packages supplied by a PackageSource using the semantics of the NuGet, PowerShellGet or Chocolatey PackageProviders.
+* **cPackage** - The cPackage resource is used to install, uninstall, publish and save packages supplied by a PackageSource using the semantics of the NuGet, PowerShellGet or Chocolatey PackageProviders.
 
 ##Requirements
 
