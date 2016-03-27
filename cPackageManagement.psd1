@@ -4,7 +4,7 @@
 # RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '1.1.0'
+ModuleVersion = '1.1.0.0'
 
 # ID used to uniquely identify this module
 GUID = 'a7ad0652-5492-4eb6-9152-a4f423b701b6'
@@ -87,16 +87,16 @@ PrivateData = @{
         Tags = 'DSC','PackageManagement', 'DSCResource'
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = ''
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = ''
 
         # A URL to an icon representing this module.
         # IconUri = ''
 
         # ReleaseNotes of this module
-        # ReleaseNotes = ''
+        ReleaseNotes = ''
 
         # External dependent modules of this module
         # ExternalModuleDependencies = ''
