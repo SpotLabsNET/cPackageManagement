@@ -38,6 +38,8 @@
     <Folder Include="DSCResources\SPOT_Package\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include=".gitattributes" />
+    <Compile Include=".gitignore" />
     <Compile Include="cPackageManagement.psd1" />
     <Compile Include="DSCResources.Tests\cPackageSource\cPackageSource.tests.ps1" />
     <Compile Include="DSCResources.Tests\cPackage\NugetPackage.Get.Tests.ps1" />

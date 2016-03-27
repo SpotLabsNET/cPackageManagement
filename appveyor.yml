@@ -7,10 +7,10 @@ os: WMF 5
 version: 1.1.{build}.0
 install:
   - cinst -y pester
-  - git clone https://github.com/PowerShell/DscResource.Tests DSCResources.Tests
+  - git clone https://github.com/PowerShell/DscResource.Tests DSCResources.Tests.Shared
   
   - ps: Push-Location
-  - cd DscResources.Tests
+  - cd DSCResources.Tests.Shared
   - ps: Import-Module .\TestHelper.psm1 -force
   - ps: Pop-Location
   
