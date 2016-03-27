@@ -27,7 +27,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="DSCResources.Docs\" />
     <Folder Include="DSCResources.Tests\" />
     <Folder Include="DSCResources.Tests\cPackageSource\" />
     <Folder Include="DSCResources.Tests\cPackage\" />
@@ -65,9 +64,9 @@
     <Compile Include="DSCResources\SPOT_Package\SPOT_Package.psm1" />
     <Compile Include="DSCResources\SPOT_Package\SPOT_Package.schema.mof" />
     <Compile Include="DSCResources\SPOT_Package\SPOT_Package.strings.psd1" />
-    <Compile Include="DSCResources.Docs\LICENSE" />
-    <Compile Include="DSCResources.Docs\README.md" />
+    <Compile Include="LICENSE.md" />
     <Compile Include="appveyor.yml" />
+    <Compile Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="cPackageManagement.licenseheader" />
