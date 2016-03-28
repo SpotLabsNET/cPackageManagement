@@ -27,7 +27,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="DSCResources.Docs\" />
     <Folder Include="DSCResources.Tests\" />
     <Folder Include="DSCResources.Tests\cPackageSource\" />
     <Folder Include="DSCResources.Tests\cPackage\" />
@@ -39,7 +38,26 @@
     <Folder Include="DSCResources\SPOT_Package\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include=".gitattributes" />
+    <Compile Include=".gitignore" />
+    <Compile Include="commands.json" />
+    <Compile Include="cPackageManagement.clean.ps1" />
     <Compile Include="cPackageManagement.psd1" />
+    <Compile Include="cPackageManagement.build.ps1">
+    </Compile>
+    <Compile Include="cPackageManagement.deploy.ps1">
+    </Compile>
+    <Compile Include="cPackageManagement.install.ps1">
+    </Compile>
+    <Compile Include="cPackageManagement.inspect.ps1" />
+    <Compile Include="cPackageManagement.build.ps1">
+    </Compile>
+    <Compile Include="cPackageManagement.deploy.ps1">
+    </Compile>
+    <Compile Include="cPackageManagement.install.ps1">
+    </Compile>
+    <Compile Include="cPackageManagement.test.ps1">
+    </Compile>
     <Compile Include="DSCResources.Tests\cPackageSource\cPackageSource.tests.ps1" />
     <Compile Include="DSCResources.Tests\cPackage\NugetPackage.Get.Tests.ps1" />
     <Compile Include="DSCResources.Tests\cPackage\NugetPackage.IntegrationTest.Tests.ps1" />
@@ -65,9 +83,9 @@
     <Compile Include="DSCResources\SPOT_Package\SPOT_Package.psm1" />
     <Compile Include="DSCResources\SPOT_Package\SPOT_Package.schema.mof" />
     <Compile Include="DSCResources\SPOT_Package\SPOT_Package.strings.psd1" />
-    <Compile Include="DSCResources.Docs\LICENSE" />
-    <Compile Include="DSCResources.Docs\README.md" />
+    <Compile Include="LICENSE.md" />
     <Compile Include="appveyor.yml" />
+    <Compile Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />

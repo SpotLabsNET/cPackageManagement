@@ -7,10 +7,10 @@ os: WMF 5
 version: 1.1.{build}.0
 install:
   - cinst -y pester
-  - git clone https://github.com/PowerShell/DscResource.Tests
+  - git clone https://github.com/PowerShell/DscResource.Tests DSCResources.Tests.Shared
   
   - ps: Push-Location
-  - cd DscResource.Tests
+  - cd DSCResources.Tests.Shared
   - ps: Import-Module .\TestHelper.psm1 -force
   - ps: Pop-Location
   
@@ -56,7 +56,7 @@ deploy_script:
       [System.IO.Compression.ZipFile]::CreateFromDirectory($pwd, $zipFilePath)
 
       # Creating NuGet package artifact
-      New-Nuspec -packageName $env:APPVEYOR_PROJECT_NAME -version $env:APPVEYOR_BUILD_VERSION -author "Microsoft" -owners "Microsoft" -licenseUrl "https://github.com/PowerShell/DscResources/blob/master/LICENSE" -projectUrl "https://github.com/$($env:APPVEYOR_REPO_NAME)" -packageDescription $env:APPVEYOR_PROJECT_NAME -tags "DesiredStateConfiguration DSC DSCResourceKit" -destinationPath .
+      New-Nuspec -packageName $env:APPVEYOR_PROJECT_NAME -version $env:APPVEYOR_BUILD_VERSION -author $manifest.Author -owners $manifest.CompanyName -licenseUrl $manifest.PrivateData.LicenseUrl -projectUrl $manifest.PrivateData.ProjectUrl -packageDescription $env:APPVEYOR_PROJECT_NAME -tags $manifest.PrivateData.Tags -destinationPath .
       nuget pack ".\$($env:APPVEYOR_PROJECT_NAME).nuspec" -outputdirectory .
       $nuGetPackageName = $env:APPVEYOR_PROJECT_NAME + "." + $env:APPVEYOR_BUILD_VERSION + ".nupkg"
       $nuGetPackagePath = (Get-ChildItem $nuGetPackageName).FullName
