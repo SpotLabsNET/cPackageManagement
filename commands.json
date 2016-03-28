@@ -1,0 +1,30 @@
+{
+  "commands": {
+    "install": {
+      "fileName": "powershell.exe",
+      "workingDirectory": ".",
+      "arguments": "-ExecutionPolicy Bypass -File cPackageManagement.install.ps1"
+    },
+    "build": {
+      "fileName": "powershell.exe",
+      "workingDirectory": ".",
+      "arguments": "-ExecutionPolicy Bypass -File cPackageManagement.build.ps1"
+    },
+    "test": {
+      "fileName": "powershell.exe",
+      "workingDirectory": ".",
+      "arguments": "-ExecutionPolicy Bypass -File cPackageManagement.test.ps1"
+    },
+    "deploy": {
+      "fileName": "powershell.exe",
+      "workingDirectory": ".",
+      "arguments": "-ExecutionPolicy Bypass -File cPackageManagement.deploy.ps1"
+    },
+    "clean": {
+      "fileName": "powershell.exe",
+      "workingDirectory": ".",
+      "arguments": "-ExecutionPolicy Bypass -File cPackageManagement.clean.ps1"
+    }
+  },
+  "-vs-binding":{"BeforeBuild":["install"],"AfterBuild":["build","test","deploy"],"Clean":["clean"]}
+}
